@@ -1,0 +1,24 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  margin: 0 auto;
+  align-items: center;
+  gap: 10rem;
+  width: min(95%, 70rem);
+  border: 2px solid red;
+}
+
+.settings {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
