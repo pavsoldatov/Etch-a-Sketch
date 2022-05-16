@@ -22,3 +22,15 @@
   text-align: center;
 }
 
+.sketch-grid {
+  box-shadow: 0 0 8px 8px #9f9f9f;
+  min-width: 640px;
+  min-height: 640px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+}
+
+.sketch-grid > div {
+  background-color: lightblue;
+}
