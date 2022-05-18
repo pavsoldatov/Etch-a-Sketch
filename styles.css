@@ -20,6 +20,8 @@
   display: flex;
   flex-direction: column;
   text-align: center;
+  align-items: center;
+  gap: 22px;
 }
 
 .sketch-grid {
@@ -31,6 +33,29 @@
   grid-template-rows: repeat(4, 1fr);
 }
 
-.sketch-grid > div {
-  background-color: lightblue;
+.settings__toggle-grid-button {
+  height: 2.5rem;
+  width: 8rem;
+  border-radius: 10px;
+  background-color: #ffffff;
+  color: #414141;
+  font-weight: 600;
+  font-size: 14px;
+  border: 1px solid #ff9000;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 150ms ease-in-out;
 }
+
+.settings__toggle-grid-button:hover {
+  background-color: #fff9f2;
+}
+
+.settings__toggle-grid-button:active {
+  background-color: #ffeed8;
+}
+.settings__toggle-grid-button:focus {
+  box-shadow: 0px 0px 0px 1px #ffffff, 0px 0px 0px 3px #d4d4d4;
+  border-radius: 4px;
+}
+
