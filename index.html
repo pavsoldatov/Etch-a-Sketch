@@ -11,15 +11,18 @@
 <body>
     <main class="container">
         <section class="settings">
+            <div class="settings__colorpicker-wrapper">
+                <input type="color" class="settings__colorpicker-value" value="#535379">
+                <label for="settings__colorpicker-value" class="settings__colorpicker-label">Color Picker:</label>
+            </div>
             <button class="settings__toggle-grid-button">Toggle Grid</button>
             <div class="settings__grid-size">
-                <label class="settings__grid-label" for="grid-size">16x16</label>
+                <label class="settings__grid-size-label" for="grid-size">16x16</label>
                 <input class="settings__grid-size-input" type="range" name="grid-size" min="1" max="100" value="16" step="1"/>
             </div>
         </section>
         <section class="sketch-grid">
         </section>
-        <div></div>
     </main>
 </body>
 </html>

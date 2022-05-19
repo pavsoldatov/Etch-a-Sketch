@@ -36,7 +36,7 @@
 .settings__toggle-grid-button {
   height: 2.5rem;
   width: 8rem;
-  border-radius: 10px;
+  border-radius: 8px;
   background-color: #ffffff;
   color: #414141;
   font-weight: 600;
@@ -56,6 +56,31 @@
 }
 .settings__toggle-grid-button:focus {
   box-shadow: 0px 0px 0px 1px #ffffff, 0px 0px 0px 3px #d4d4d4;
-  border-radius: 4px;
 }
 
+.settings__grid-size {
+  display: flex;
+  flex-direction: column;
+}
+
+.settings__colorpicker-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+input[type="color"] {
+  -webkit-appearance: none;
+  border: none;
+  width: 64px;
+  height: 64px;
+  background-color: transparent;
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+input[type="color"]::-webkit-color-swatch {
+  border-radius: 50%;
+  border: none;
+}
