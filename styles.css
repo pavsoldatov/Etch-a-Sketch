@@ -21,7 +21,7 @@
   flex-direction: column;
   text-align: center;
   align-items: center;
-  gap: 22px;
+  gap: 64px;
 }
 
 .sketch-grid {
@@ -37,8 +37,8 @@
   height: 2.5rem;
   width: 8rem;
   border-radius: 8px;
-  background-color: #ffffff;
-  color: #414141;
+  background-color: #ff9000;
+  color: #fff;
   font-weight: 600;
   font-size: 14px;
   border: 1px solid #ff9000;
@@ -46,14 +46,11 @@
   text-align: center;
   transition: background-color 150ms ease-in-out;
 }
-
-.settings__toggle-grid-button:hover {
-  background-color: #fff9f2;
+.settings__toggle-grid-button.toggled {
+  color: #414141;
+  background-color: #ffffff;
 }
 
-.settings__toggle-grid-button:active {
-  background-color: #ffeed8;
-}
 .settings__toggle-grid-button:focus {
   box-shadow: 0px 0px 0px 1px #ffffff, 0px 0px 0px 3px #d4d4d4;
 }
@@ -67,7 +64,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+}
+
+.settings__wrapper--lower {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
 }
 
 input[type="color"] {
@@ -83,4 +86,59 @@ input[type="color"]::-webkit-color-swatch-wrapper {
 input[type="color"]::-webkit-color-swatch {
   border-radius: 50%;
   border: none;
+}
+input[type="color"]::-moz-color-swatch {
+  border-radius: 50%;
+  border: none;
+}
+
+
+input[type="range"] {
+  width: 100%;
+  margin: 6.5px 0;
+  background-color: transparent;
+  -webkit-appearance: none;
+}
+input[type="range"]:focus {
+  outline: none;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  background: rgba(255, 238, 216, 0.9);
+  border: 0.1px solid #010101;
+  border-radius: 25px;
+  width: 100%;
+  height: 6px;
+  cursor: pointer;
+}
+input[type="range"]::-webkit-slider-thumb {
+  margin-top: -6.6px;
+  width: 20px;
+  height: 19px;
+  background: #ffffff;
+  border: 1px solid #000000;
+  border-radius: 20px;
+  cursor: pointer;
+  -webkit-appearance: none;
+}
+input[type="range"]:focus::-webkit-slider-runnable-track {
+  background: #ff9000;
+}
+input[type="range"]::-moz-range-track {
+  background: rgba(255, 238, 216, 0.9);
+  border: 0.1px solid #010101;
+  border-radius: 25px;
+  width: 100%;
+  height: 6px;
+  cursor: pointer;
+}
+input[type="range"]:focus::-moz-range-track {
+  background: #ff9000;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 19px;
+  background: #ffffff;
+  border: 1px solid #000000;
+  border-radius: 20px;
+  cursor: pointer;
 }
