@@ -5,11 +5,11 @@ const gridSquare = document.createElement("div");
 const toggleGridButton = document.querySelector(
   ".settings__toggle-grid-button"
 );
-
 let gridSize = Number(
   document.querySelector(".settings__grid-size-input").value
 );
-let borderStyle = "1px solid #555";
+let borderStyle = "1px solid #979797";
+let userSelectedColor = document.querySelector(".settings__color").value;
 
 function addCSS(element, style) {
   for (let property in style) element.style[property] = style[property];
@@ -21,11 +21,16 @@ addCSS(sketchGrid, {
   gridTemplateColumns: `repeat(${gridSizeInput.value}, 1fr)`,
 });
 
+function useSelectedColor(e) {
+  e.target.style.backgroundColor = `${userSelectedColor}`;
+}
 
 function populateSquares(parent, size) {
   for (let i = 0; i < size * size; i++) {
     square = document.createElement("div");
     parent.append(square);
+    square.style.cssText += "user-select: none";
+    square.addEventListener("mousedown", useSelectedColor);
   }
   drawGrid(parent.children, size);
 }
@@ -60,13 +65,19 @@ function updateGrid(e) {
 }
 gridSizeInput.addEventListener("change", updateGrid);
 
-
 function toggleGrid(e) {
   e.target.classList.toggle("toggled");
-    Array.from(e.target.classList).includes("toggled")
+  Array.from(e.target.classList).includes("toggled")
     ? (borderStyle = "none")
-    : (borderStyle = "1px solid #555");
+    : (borderStyle = "1px solid #979797");
 
   drawGrid(sketchGrid.children, gridSize);
 }
 toggleGridButton.addEventListener("click", toggleGrid);
+
+function chooseColor(e) {
+  if (!e.target.matches(".settings__color")) return;
+  e.target.setAttribute("value", `${e.target.value}`);
+  userSelectedColor = e.target.value;
+}
+document.addEventListener("change", chooseColor);

@@ -13,7 +13,6 @@
   align-items: center;
   gap: 10rem;
   width: min(95%, 70rem);
-  border: 2px solid red;
 }
 
 .settings {
@@ -25,7 +24,7 @@
 }
 
 .sketch-grid {
-  box-shadow: 0 0 8px 8px #9f9f9f;
+  box-shadow: 0 0 8px 8px #c9c9c9;
   min-width: 640px;
   min-height: 640px;
   display: grid;
@@ -60,7 +59,7 @@
   flex-direction: column;
 }
 
-.settings__colorpicker-wrapper {
+.settings__wrapper--upper {
   display: flex;
   flex-direction: column;
   align-items: center;
