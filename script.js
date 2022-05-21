@@ -9,7 +9,7 @@ let gridSize = Number(
   document.querySelector(".settings__grid-size-input").value
 );
 let borderStyle = "1px solid #979797";
-let userSelectedColor = document.querySelector(".settings__color").value;
+let colorInput = document.querySelector(".settings__color");
 
 function addCSS(element, style) {
   for (let property in style) element.style[property] = style[property];
@@ -22,7 +22,7 @@ addCSS(sketchGrid, {
 });
 
 function useSelectedColor(e) {
-  e.target.style.backgroundColor = `${userSelectedColor}`;
+  e.target.style.backgroundColor = `${colorInput.value}`;
 }
 
 function populateSquares(parent, size) {
@@ -37,7 +37,9 @@ function populateSquares(parent, size) {
 
 function drawGrid(array, size) {
   for (let i = 0; i < size * size; i++) {
-    array[i].style.cssText += `border-left: ${borderStyle}; border-top: ${borderStyle}`;
+    array[
+      i
+    ].style.cssText += `border-left: ${borderStyle}; border-top: ${borderStyle}`;
   }
   for (let i = 0; i < size * size; i += size) {
     array[i + size - 1].style.cssText += `border-right: ${borderStyle}`;
@@ -75,9 +77,10 @@ function toggleGrid(e) {
 }
 toggleGridButton.addEventListener("click", toggleGrid);
 
+//rewrite the function so the color is selected immediately on drag
+
+colorInput.addEventListener("input", chooseColor);
 function chooseColor(e) {
-  if (!e.target.matches(".settings__color")) return;
   e.target.setAttribute("value", `${e.target.value}`);
-  userSelectedColor = e.target.value;
+  colorInput.value = e.target.value;
 }
-document.addEventListener("change", chooseColor);
