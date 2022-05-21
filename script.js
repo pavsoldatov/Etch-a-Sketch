@@ -21,16 +21,25 @@ addCSS(sketchGrid, {
   gridTemplateColumns: `repeat(${gridSizeInput.value}, 1fr)`,
 });
 
-function useSelectedColor(e) {
+let x = 0;
+let y = 0;
+let isDrawing = false;
+
+function paint(e) {
+  if (e.type === "mousedown") isDrawing = true;
+  if (e.type === "mouseup") isDrawing = false;
+  if (isDrawing === false) return;
   e.target.style.backgroundColor = `${colorInput.value}`;
 }
 
 function populateSquares(parent, size) {
   for (let i = 0; i < size * size; i++) {
     square = document.createElement("div");
-    parent.append(square);
     square.style.cssText += "user-select: none";
-    square.addEventListener("mousedown", useSelectedColor);
+    ["mousedown", "mouseover", "mouseup"].forEach((eventType) =>
+      square.addEventListener(eventType, paint)
+    );
+    parent.append(square);
   }
   drawGrid(parent.children, size);
 }
@@ -62,7 +71,7 @@ function updateGrid(e) {
   });
 
   gridSizeLabel.innerText = `${gridSize} x ${gridSize}`;
-  sketchGrid.innerHTML = "";
+  clearGrid();
   populateSquares(sketchGrid, gridSize);
 }
 gridSizeInput.addEventListener("change", updateGrid);
@@ -77,10 +86,13 @@ function toggleGrid(e) {
 }
 toggleGridButton.addEventListener("click", toggleGrid);
 
-//rewrite the function so the color is selected immediately on drag
-
-colorInput.addEventListener("input", chooseColor);
 function chooseColor(e) {
+  console.log(e);
   e.target.setAttribute("value", `${e.target.value}`);
   colorInput.value = e.target.value;
+}
+colorInput.addEventListener("input", chooseColor);
+
+function clearGrid() {
+  sketchGrid.innerHTML = "";
 }
