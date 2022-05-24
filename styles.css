@@ -32,7 +32,9 @@
   grid-template-rows: repeat(4, 1fr);
 }
 
-.settings__toggle-grid-button {
+.settings__toggle-grid-button,
+.settings__clear-grid-button,
+.settings__rainbow-mode-button {
   height: 2.5rem;
   width: 8rem;
   border-radius: 8px;
@@ -45,13 +47,33 @@
   text-align: center;
   transition: background-color 150ms ease-in-out;
 }
-.settings__toggle-grid-button.toggled {
+.settings__clear-grid-button,
+.settings__rainbow-mode-button {
+  background-color: #ffffff;
+  border: 1px solid #ff9000;
+  color: #414141;
+}
+
+.settings__toggle-grid-button.toggled,
+.settings__clear-grid-button.toggled,
+.settings__rainbow-mode-button.toggled {
   color: #414141;
   background-color: #ffffff;
 }
 
-.settings__toggle-grid-button:focus {
+.settings__toggle-grid-button:focus,
+.settings__clear-grid-button:focus,
+.settings__rainbow-mode-button:focus {
   box-shadow: 0px 0px 0px 1px #ffffff, 0px 0px 0px 3px #d4d4d4;
+}
+
+.settings__clear-grid-button:hover,
+.settings__rainbow-mode-button:hover {
+  background-color: #fff9f2;
+}
+
+.settings__toggle-grid-button:hover {
+  background-color: #ffa42e;
 }
 
 .settings__grid-size {
@@ -90,7 +112,6 @@ input[type="color"]::-moz-color-swatch {
   border-radius: 50%;
   border: none;
 }
-
 
 input[type="range"] {
   width: 100%;

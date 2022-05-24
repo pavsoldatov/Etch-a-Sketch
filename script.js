@@ -5,6 +5,8 @@ const gridSquare = document.createElement("div");
 const toggleGridButton = document.querySelector(
   ".settings__toggle-grid-button"
 );
+const clearGridBtn = document.querySelector(".settings__clear-grid-button");
+const rainbowModeBtn = document.querySelector(".settings__rainbow-mode-button")
 let gridSize = Number(
   document.querySelector(".settings__grid-size-input").value
 );
@@ -24,8 +26,12 @@ addCSS(sketchGrid, {
 let x = 0;
 let y = 0;
 let isDrawing = false;
+document.body.onmousedown = () => (isDrawing = true);
+document.body.onmouseup = () => (isDrawing = false);
 
 function paint(e) {
+  // console.log(e.offsetX, e.offsetY);
+
   if (e.type === "mousedown") isDrawing = true;
   if (e.type === "mouseup") isDrawing = false;
   if (isDrawing === false) return;
@@ -71,7 +77,7 @@ function updateGrid(e) {
   });
 
   gridSizeLabel.innerText = `${gridSize} x ${gridSize}`;
-  clearGrid();
+  sketchGrid.innerHTML = "";
   populateSquares(sketchGrid, gridSize);
 }
 gridSizeInput.addEventListener("change", updateGrid);
@@ -94,5 +100,11 @@ function chooseColor(e) {
 colorInput.addEventListener("input", chooseColor);
 
 function clearGrid() {
-  sketchGrid.innerHTML = "";
+  for (let i = 0; i < gridSize * gridSize; i++) {
+    sketchGrid.children[i].style.cssText += `background: none;`;
+  }
 }
+clearGridBtn.addEventListener("click", clearGrid);
+
+const generateRandomHex = () =>
+  `#${(Math.random() * 0xfffff * 1000000).toString(16).slice(0, 6)}`;
