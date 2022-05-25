@@ -34,7 +34,9 @@
 
 .settings__toggle-grid-button,
 .settings__clear-grid-button,
-.settings__rainbow-mode-button {
+.settings__random-mode-button,
+.settings__eraser-button,
+.settings__color-fill-button {
   height: 2.5rem;
   width: 8rem;
   border-radius: 8px;
@@ -48,32 +50,47 @@
   transition: background-color 150ms ease-in-out;
 }
 .settings__clear-grid-button,
-.settings__rainbow-mode-button {
+.settings__random-mode-button,
+.settings__eraser-button,
+.settings__color-fill-button {
   background-color: #ffffff;
   border: 1px solid #ff9000;
   color: #414141;
 }
 
-.settings__toggle-grid-button.toggled,
-.settings__clear-grid-button.toggled,
-.settings__rainbow-mode-button.toggled {
+.settings__toggle-grid-button.toggled {
   color: #414141;
   background-color: #ffffff;
 }
+.settings__random-mode-button.toggled,
+.settings__eraser-button.toggled {
+  background-color: #ff9000;
+  border: 1px solid #ff9000;
+  color: #fff;
+}
 
-.settings__toggle-grid-button:focus,
-.settings__clear-grid-button:focus,
-.settings__rainbow-mode-button:focus {
+button:focus {
   box-shadow: 0px 0px 0px 1px #ffffff, 0px 0px 0px 3px #d4d4d4;
 }
 
+.settings__toggle-grid-button:hover,
 .settings__clear-grid-button:hover,
-.settings__rainbow-mode-button:hover {
+.settings__color-fill-button:hover,
+.settings__clear-grid-button:hover,
+.settings__random-mode-button:not(.toggled):hover,
+.settings__eraser-button:not(.toggled):hover {
   background-color: #fff9f2;
 }
 
-.settings__toggle-grid-button:hover {
+.settings__toggle-grid-button:not(.toggled):hover {
   background-color: #ffa42e;
+}
+
+.settings__clear-grid-button:active,
+.settings__random-mode-button:active,
+.settings__eraser-button:active,
+.settings__color-fill-button:active {
+  background-color: #ffeed8;
 }
 
 .settings__grid-size {
@@ -107,6 +124,8 @@ input[type="color"]::-webkit-color-swatch-wrapper {
 input[type="color"]::-webkit-color-swatch {
   border-radius: 50%;
   border: none;
+  box-shadow: 0px 24px 38px 3px rgba(0, 0, 0, 0.14),
+    0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 11px 15px -7px rgba(0, 0, 0, 0.2);
 }
 input[type="color"]::-moz-color-swatch {
   border-radius: 50%;
@@ -128,7 +147,7 @@ input[type="range"]::-webkit-slider-runnable-track {
   border-radius: 25px;
   width: 100%;
   height: 6px;
-  cursor: pointer;
+  cursor: ew-resize;
 }
 input[type="range"]::-webkit-slider-thumb {
   margin-top: -6.6px;
@@ -137,7 +156,7 @@ input[type="range"]::-webkit-slider-thumb {
   background: #ffffff;
   border: 1px solid #000000;
   border-radius: 20px;
-  cursor: pointer;
+  cursor: ew-resize;
   -webkit-appearance: none;
 }
 input[type="range"]:focus::-webkit-slider-runnable-track {

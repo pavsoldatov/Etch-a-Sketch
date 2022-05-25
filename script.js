@@ -6,7 +6,8 @@ const toggleGridButton = document.querySelector(
   ".settings__toggle-grid-button"
 );
 const clearGridBtn = document.querySelector(".settings__clear-grid-button");
-const rainbowModeBtn = document.querySelector(".settings__rainbow-mode-button")
+const rainbowModeBtn = document.querySelector(".settings__random-mode-button");
+const eraserBtn = document.querySelector(".settings__eraser-button");
 let gridSize = Number(
   document.querySelector(".settings__grid-size-input").value
 );
@@ -26,16 +27,38 @@ addCSS(sketchGrid, {
 let x = 0;
 let y = 0;
 let isDrawing = false;
+let currentMode = "singleColor";
 document.body.onmousedown = () => (isDrawing = true);
 document.body.onmouseup = () => (isDrawing = false);
+rainbowModeBtn.onclick = (e) => {
+  rainbowModeBtn.classList.toggle("toggled");
+  Array.from(e.target.classList).includes("toggled")
+    ? (currentMode = "randomColor")
+    : (currentMode = "singleColor");
+};
+eraserBtn.onclick = (e) => {
+  eraserBtn.classList.toggle("toggled");
+  Array.from(e.target.classList).includes("toggled")
+    ? (currentMode = "eraser")
+    : (currentMode = "singleColor");
+};
 
 function paint(e) {
   // console.log(e.offsetX, e.offsetY);
+  console.log(currentMode);
 
   if (e.type === "mousedown") isDrawing = true;
   if (e.type === "mouseup") isDrawing = false;
   if (isDrawing === false) return;
-  e.target.style.backgroundColor = `${colorInput.value}`;
+  if (currentMode === "singleColor") {
+    e.target.style.backgroundColor = `${colorInput.value}`;
+  }
+  if (currentMode === "randomColor") {
+    e.target.style.backgroundColor = `${generateRandomHex()}`;
+  }
+  if (currentMode === "eraser") {
+    e.target.style.backgroundColor = "#fff";
+  }
 }
 
 function populateSquares(parent, size) {
