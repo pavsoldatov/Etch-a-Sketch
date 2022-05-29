@@ -63,7 +63,8 @@
   background-color: #ffffff;
 }
 .settings__random-mode-button.toggled,
-.settings__eraser-button.toggled {
+.settings__eraser-button.toggled,
+.settings__color-fill-button.toggled {
   background-color: #ff9000;
   border: 1px solid #ff9000;
   color: #fff;
@@ -82,10 +83,14 @@ button:focus {
   background-color: #fff9f2;
 }
 
-.settings__toggle-grid-button:not(.toggled):hover {
+.settings__toggle-grid-button:not(.toggled):hover,
+.settings__random-mode-button.toggled:hover,
+.settings__color-fill-button.toggled:hover,
+.settings__eraser-button.toggled:hover {
   background-color: #ffa42e;
 }
 
+.settings__toggle-grid-button.toggled:active,
 .settings__clear-grid-button:active,
 .settings__random-mode-button:active,
 .settings__eraser-button:active,
