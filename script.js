@@ -100,32 +100,66 @@ function paint(e) {
   }
 }
 
+function findNeighbors(target, x, y, oldVal, newVal) {
+  const grid = Array.from(sketchGrid.children);
+  const index = grid.indexOf(target);
+  const possibleNeighbors = [
+    grid[index - gridSize],
+    grid[index + gridSize],
+    grid[index + 1],
+    grid[index - 1],
+  ];
+
+  const neighbors = [];
+  for (possibleNeighbor of possibleNeighbors) {
+    if (
+      possibleNeighbor != undefined &&
+      possibleNeighbor.style.backgroundColor == oldVal
+    ) {
+      neighbors.push(possibleNeighbor);
+    }
+  }
+  console.log(neighbors);
+  return neighbors;
+}
+
 function floodFill(target, x, y, oldColor, newColor) {
   const grid = Array.from(sketchGrid.children);
   const index = grid.indexOf(target);
-  console.log(index, grid[index]);
-  // console.log(grid[index].style.backgroundColor, newColor);
 
   if (
-    index < 0 ||
-    index >= grid.length ||
-    grid[index].style.backgroundColor != oldColor
-  ) /*  it kinda works except that it does not exit the function call 
-        during the last stages: when ALL the required squares are
-        already color-filled, it continues to traverse the grid, 
-        stepping beyond the boundaries.   */
-    return;
-  if (grid[index].style.backgroundColor == newColor) return;
+    grid[index].style.backgroundColor != oldColor ||
+    grid[index].style.backgroundColor == newColor
+  )
+    if (newColor === oldColor) return;
 
-  grid[index].style.backgroundColor = newColor;
+  let stack = [];
+  stack.push(grid[index]);
 
-  floodFill(grid[index - gridSize], x, y, oldColor, newColor);
-  floodFill(grid[index + gridSize], x, y, oldColor, newColor);
-  floodFill(grid[index + 1], x, y, oldColor, newColor);
-  floodFill(grid[index - 1], x, y, oldColor, newColor);
+  while (stack.length > 0) {
+    let currentDiv = stack.shift();
+    let possibleNeighbors = findNeighbors(currentDiv, x, y, oldColor, newColor);
+    console.log(possibleNeighbors, currentDiv);
 
-  /* let stack = [];
+    if (currentDiv.style.backgroundColor === oldColor) {
+      currentDiv.style.backgroundColor = newColor;
 
+      for (neighbor of possibleNeighbors) {
+        stack.push(neighbor);
+      }
+    }
+  }
+
+  // test for the ends of spans top and bottom
+  // For each new free span, plant a seed
+  // Repeat until there are no more
+
+  // floodFill(grid[index - gridSize], x, y, oldColor, newColor);
+  // floodFill(grid[index + gridSize], x, y, oldColor, newColor);
+  // floodFill(grid[index + 1], x, y, oldColor, newColor);
+  // floodFill(grid[index - 1], x, y, oldColor, newColor);
+
+  /* 
   // filling the span as right as we can
   for (let i = index; i < index + gridSize - x; i++) {
     if (grid[i].style.backgroundColor !== oldColor) break;
