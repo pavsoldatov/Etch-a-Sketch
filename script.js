@@ -114,7 +114,8 @@ function findNeighbors(target, x, y, oldVal, newVal) {
   for (possibleNeighbor of possibleNeighbors) {
     if (
       possibleNeighbor != undefined &&
-      possibleNeighbor.style.backgroundColor == oldVal
+      possibleNeighbor.style.backgroundColor == oldVal &&
+      possibleNeighbor.style.backgroundColor !== newVal
     ) {
       neighbors.push(possibleNeighbor);
     }
@@ -130,7 +131,7 @@ function floodFill(target, x, y, oldColor, newColor) {
   if (
     grid[index].style.backgroundColor != oldColor ||
     grid[index].style.backgroundColor == newColor
-  )
+  ) return
     if (newColor === oldColor) return;
 
   let stack = [];
@@ -265,3 +266,27 @@ function clearGrid() {
   }
 }
 clearGridBtn.addEventListener("click", clearGrid);
+
+function generateMatrix(array, size) {
+  let colsArr = [];
+  let rowsArr = [];
+
+  for (let i = 0; i < array.length; i += size) {
+    let arr = [];
+    let temp = i;
+    let newRowIndex = i + size - 1;
+    for (let i = temp; i <= newRowIndex; i++) {
+      arr.push(array[i]);
+    }
+    rowsArr.push(arr);
+  }
+  for (let i = 0; i < size; i++) {
+    let arr = [];
+    let temp = i;
+    for (let i = temp; i < array.length; i += size) {
+      arr.push(array[i]);
+    }
+    colsArr.push(arr);
+  }
+  return { rowsArr, colsArr };
+}
