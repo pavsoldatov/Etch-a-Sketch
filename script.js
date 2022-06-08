@@ -91,32 +91,36 @@ function paint(e) {
     if (e.target.style.backgroundColor === "#fff") return;
     e.target.style.backgroundColor = "#fff";
   } else if (currentMode === "colorFill") {
-    let x = getCoordinates(e.target)[0];
-    let y = getCoordinates(e.target)[1];
+    const gridArr = Array.from(e.target.parentElement.children);
+    const { rowsArr, colsArr } = generateMatrix(gridArr, gridSize);
+    const { x, y } = getCoordinates(e.target);
+    console.log(x, y);
+
     let oldColor = e.target.style.backgroundColor;
     let newColor = hexToRGB(colorInput.value);
 
-    floodFill(e.target, x, y, oldColor, newColor);
+    floodFill(rowsArr, colsArr, x, y, oldColor, newColor);
   }
 }
 
-function findNeighbors(target, x, y, oldVal, newVal) {
-  const grid = Array.from(sketchGrid.children);
-  const index = grid.indexOf(target);
+function findNeighbors(rows, cols, x, y, oldVal, newVal) {
+
   const possibleNeighbors = [
-    grid[index - gridSize],
-    grid[index + gridSize],
-    grid[index + 1],
-    grid[index - 1],
+    rows[y][x + 1],
+    rows[y][x - 1],
+    cols[x][y + 1],
+    cols[x][y - 1],
   ];
+  console.log(possibleNeighbors);
 
   const neighbors = [];
   for (possibleNeighbor of possibleNeighbors) {
     if (
-      possibleNeighbor != undefined &&
-      possibleNeighbor.style.backgroundColor == oldVal &&
+      possibleNeighbor !== undefined &&
+      possibleNeighbor.style.backgroundColor === oldVal &&
       possibleNeighbor.style.backgroundColor !== newVal
     ) {
+      possibleNeighbor.style.backgroundColor = newVal;
       neighbors.push(possibleNeighbor);
     }
   }
@@ -124,31 +128,26 @@ function findNeighbors(target, x, y, oldVal, newVal) {
   return neighbors;
 }
 
-function floodFill(target, x, y, oldColor, newColor) {
-  const grid = Array.from(sketchGrid.children);
-  const index = grid.indexOf(target);
-
-  if (
-    grid[index].style.backgroundColor != oldColor ||
-    grid[index].style.backgroundColor == newColor
-  )
-    return;
+function floodFill(rows, cols, x, y, oldColor, newColor) {
   if (newColor === oldColor) return;
 
   let stack = [];
-  stack.push(grid[index]);
+  stack.push(rows[y][x]);
+  rows[y][x].style.backgroundColor = newColor;
+  console.log(stack);
 
-  while (stack.length > 0) {
+  for (let i = 0; stack.length > 0; i++) {
     let currentDiv = stack.shift();
-    let possibleNeighbors = findNeighbors(currentDiv, x, y, oldColor, newColor);
+    let { x, y } = getCoordinates(currentDiv);
+    let possibleNeighbors = findNeighbors(rows, cols, x, y, oldColor, newColor);
     console.log(possibleNeighbors, currentDiv);
 
-    if (currentDiv.style.backgroundColor === oldColor) {
-      currentDiv.style.backgroundColor = newColor;
+    // if (currentDiv.style.backgroundColor === oldColor) {
+    //   currentDiv.style.backgroundColor = newColor;
+    // }
 
-      for (neighbor of possibleNeighbors) {
-        stack.push(neighbor);
-      }
+    for (neighbor of possibleNeighbors) {
+      stack.push(neighbor);
     }
   }
 
