@@ -131,8 +131,9 @@ function floodFill(target, x, y, oldColor, newColor) {
   if (
     grid[index].style.backgroundColor != oldColor ||
     grid[index].style.backgroundColor == newColor
-  ) return
-    if (newColor === oldColor) return;
+  )
+    return;
+  if (newColor === oldColor) return;
 
   let stack = [];
   stack.push(grid[index]);
@@ -195,7 +196,7 @@ function getCoordinates(target) {
   let y = Math.floor(
     gridArr.indexOf(target) / (width / (width / gridSizeInput.value))
   );
-  return [x, y];
+  return { x, y };
 }
 
 function populateSquares(parent, size) {
