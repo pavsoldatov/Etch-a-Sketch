@@ -20,6 +20,8 @@ let gridSize = +document.querySelector(".settings__grid-size-input").value;
 let borderStyle = "1px solid #979797";
 let colorInput = document.querySelector(".settings__color");
 
+let matrix2D;
+
 function addCSS(element, style) {
   for (let property in style) element.style[property] = style[property];
 }
@@ -91,27 +93,22 @@ function paint(e) {
     if (e.target.style.backgroundColor === "#fff") return;
     e.target.style.backgroundColor = "#fff";
   } else if (currentMode === "colorFill") {
-    const gridArr = Array.from(e.target.parentElement.children);
-    const { rowsArr, colsArr } = generateMatrix(gridArr, gridSize);
+    const { rowsArr, colsArr } = matrix2D;
     const { x, y } = getCoordinates(e.target);
-    console.log(x, y);
-
-    let oldColor = e.target.style.backgroundColor;
-    let newColor = hexToRGB(colorInput.value);
+    const oldColor = e.target.style.backgroundColor;
+    const newColor = hexToRGB(colorInput.value);
 
     floodFill(rowsArr, colsArr, x, y, oldColor, newColor);
   }
 }
 
 function findNeighbors(rows, cols, x, y, oldVal, newVal) {
-
   const possibleNeighbors = [
     rows[y][x + 1],
     rows[y][x - 1],
     cols[x][y + 1],
     cols[x][y - 1],
   ];
-  console.log(possibleNeighbors);
 
   const neighbors = [];
   for (possibleNeighbor of possibleNeighbors) {
@@ -124,7 +121,6 @@ function findNeighbors(rows, cols, x, y, oldVal, newVal) {
       neighbors.push(possibleNeighbor);
     }
   }
-  console.log(neighbors);
   return neighbors;
 }
 
@@ -133,21 +129,16 @@ function floodFill(rows, cols, x, y, oldColor, newColor) {
 
   let stack = [];
   stack.push(rows[y][x]);
-  rows[y][x].style.backgroundColor = newColor;
-  console.log(stack);
 
   for (let i = 0; stack.length > 0; i++) {
     let currentDiv = stack.shift();
     let { x, y } = getCoordinates(currentDiv);
+    // what if I push/shift [x][y]coords instead of divs?
+    // calling getCoords creates performance issues
     let possibleNeighbors = findNeighbors(rows, cols, x, y, oldColor, newColor);
-    console.log(possibleNeighbors, currentDiv);
 
-    // if (currentDiv.style.backgroundColor === oldColor) {
-    //   currentDiv.style.backgroundColor = newColor;
-    // }
-
-    for (neighbor of possibleNeighbors) {
-      stack.push(neighbor);
+    for (let i = 0; i < possibleNeighbors.length; i++) {
+      stack.push(possibleNeighbors[i]);
     }
   }
 
@@ -186,8 +177,8 @@ const generateRandomHex = () =>
 // getting x-y coords for the flood-fill
 function getCoordinates(target) {
   let gridArr = Array.from(target.parentElement.children);
-  let width = parseInt(window.getComputedStyle(sketchGrid).width);
-  let height = parseInt(window.getComputedStyle(sketchGrid).height);
+  let width = 640;
+  let height = 640;
 
   let x =
     gridArr.indexOf(target) %
@@ -208,6 +199,7 @@ function populateSquares(parent, size) {
     parent.append(square);
   }
   drawGrid(parent.children, size);
+  matrix2D = generateMatrix(parent.children, size);
 }
 
 populateSquares(sketchGrid, gridSize);
@@ -254,7 +246,6 @@ function toggleGrid(e) {
 toggleGridButton.addEventListener("click", toggleGrid);
 
 function chooseColor(e) {
-  console.log(e);
   e.target.setAttribute("value", `${e.target.value}`);
   colorInput.value = e.target.value;
 }
