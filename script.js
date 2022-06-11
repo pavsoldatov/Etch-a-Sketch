@@ -39,9 +39,9 @@ function rgbToHex(string) {
   g = (+rgbArr[1]).toString(16);
   b = (+rgbArr[2]).toString(16);
 
-  if (r.length == 1) r = "0" + r;
-  if (g.length == 1) g = "0" + g;
-  if (b.length == 1) b = "0" + b;
+  if (r.length === 1) r = "0" + r;
+  if (g.length === 1) g = "0" + g;
+  if (b.length === 1) b = "0" + b;
 
   return "#" + r + g + b;
 }
@@ -104,23 +104,29 @@ function paint(e) {
 
 function findNeighbors(rows, cols, x, y, oldVal, newVal) {
   const possibleNeighbors = [
-    rows[y][x + 1],
-    rows[y][x - 1],
-    cols[x][y + 1],
-    cols[x][y - 1],
+    { square: rows[y][x + 1], coordsX: x + 1, coordsY: y },
+    { square: rows[y][x - 1], coordsX: x - 1, coordsY: y },
+    { square: cols[x][y + 1], coordsX: x, coordsY: y + 1 },
+    { square: cols[x][y - 1], coordsX: x, coordsY: y - 1},
   ];
+  // console.log(possibleNeighbors);
+
+  // rows[y][x + 1],
+  // rows[y][x - 1],
+  // cols[x][y + 1],
+  // cols[x][y - 1],
 
   const neighbors = [];
   for (possibleNeighbor of possibleNeighbors) {
     if (
-      possibleNeighbor !== undefined &&
-      possibleNeighbor.style.backgroundColor === oldVal &&
-      possibleNeighbor.style.backgroundColor !== newVal
+      possibleNeighbor.square !== undefined &&
+      possibleNeighbor.square.style.backgroundColor === oldVal &&
+      possibleNeighbor.square.style.backgroundColor !== newVal
     ) {
-      possibleNeighbor.style.backgroundColor = newVal;
       neighbors.push(possibleNeighbor);
     }
   }
+  // console.log(neighbors);
   return neighbors;
 }
 
@@ -128,17 +134,32 @@ function floodFill(rows, cols, x, y, oldColor, newColor) {
   if (newColor === oldColor) return;
 
   let stack = [];
-  stack.push(rows[y][x]);
+  let square = { square: rows[y][x], coordsX: x, coordsY: y };
+  stack.push(square);
+  // console.log(stack);
 
-  for (let i = 0; stack.length > 0; i++) {
-    let currentDiv = stack.shift();
-    let { x, y } = getCoordinates(currentDiv);
+  while (stack.length > 0) {
+    // let currentDiv = stack.shift();
+    // let { x, y } = getCoordinates(currentDiv);
+    let { square, coordsX, coordsY } = stack.shift();
+
+    // console.log(coordsX, coordsY);
     // what if I push/shift [x][y]coords instead of divs?
     // calling getCoords creates performance issues
-    let possibleNeighbors = findNeighbors(rows, cols, x, y, oldColor, newColor);
+    let possibleNeighbors = findNeighbors(
+      rows,
+      cols,
+      coordsX,
+      coordsY,
+      oldColor,
+      newColor
+    );
+    // console.log(possibleNeighbors);
 
-    for (let i = 0; i < possibleNeighbors.length; i++) {
-      stack.push(possibleNeighbors[i]);
+    for (const possibleNeighbor of possibleNeighbors) {
+      stack.push(possibleNeighbor);
+      // console.log(possibleNeighbor, possibleNeighbors);
+      possibleNeighbor.square.style.backgroundColor = newColor;
     }
   }
 
