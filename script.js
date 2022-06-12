@@ -54,7 +54,7 @@ function hexToRGB(hex) {
   return `rgb(${r}, ${g}, ${b})`;
 }
 
-// modes and corresponding behavior
+// modes and behavior
 let isDrawing = false;
 let currentMode = "singleColor";
 document.body.onmousedown = () => (isDrawing = true);
@@ -102,19 +102,14 @@ function paint(e) {
   }
 }
 
+// finding neighbors for color fill
 function findNeighbors(rows, cols, x, y, oldVal, newVal) {
   const possibleNeighbors = [
     { square: rows[y][x + 1], coordsX: x + 1, coordsY: y },
     { square: rows[y][x - 1], coordsX: x - 1, coordsY: y },
     { square: cols[x][y + 1], coordsX: x, coordsY: y + 1 },
-    { square: cols[x][y - 1], coordsX: x, coordsY: y - 1},
+    { square: cols[x][y - 1], coordsX: x, coordsY: y - 1 },
   ];
-  // console.log(possibleNeighbors);
-
-  // rows[y][x + 1],
-  // rows[y][x - 1],
-  // cols[x][y + 1],
-  // cols[x][y - 1],
 
   const neighbors = [];
   for (possibleNeighbor of possibleNeighbors) {
@@ -126,80 +121,34 @@ function findNeighbors(rows, cols, x, y, oldVal, newVal) {
       neighbors.push(possibleNeighbor);
     }
   }
-  // console.log(neighbors);
   return neighbors;
 }
 
 function floodFill(rows, cols, x, y, oldColor, newColor) {
   if (newColor === oldColor) return;
 
-  let stack = [];
-  let square = { square: rows[y][x], coordsX: x, coordsY: y };
-  stack.push(square);
-  // console.log(stack);
+  const queue = [];
+  const coords = { coordsX: x, coordsY: y };
+  queue.push(coords);
 
-  while (stack.length > 0) {
-    // let currentDiv = stack.shift();
-    // let { x, y } = getCoordinates(currentDiv);
-    let { square, coordsX, coordsY } = stack.shift();
-
-    // console.log(coordsX, coordsY);
-    // what if I push/shift [x][y]coords instead of divs?
-    // calling getCoords creates performance issues
-    let possibleNeighbors = findNeighbors(
-      rows,
-      cols,
-      coordsX,
-      coordsY,
-      oldColor,
-      newColor
-    );
-    // console.log(possibleNeighbors);
+  while (queue.length > 0) {
+    const { coordsX, coordsY } = queue.shift();
+    const possibleNeighbors = findNeighbors(rows,cols,coordsX,coordsY,oldColor,newColor);
 
     for (const possibleNeighbor of possibleNeighbors) {
-      stack.push(possibleNeighbor);
-      // console.log(possibleNeighbor, possibleNeighbors);
+      queue.push(possibleNeighbor);
       possibleNeighbor.square.style.backgroundColor = newColor;
     }
   }
-
-  // test for the ends of spans top and bottom
-  // For each new free span, plant a seed
-  // Repeat until there are no more
-
-  // floodFill(grid[index - gridSize], x, y, oldColor, newColor);
-  // floodFill(grid[index + gridSize], x, y, oldColor, newColor);
-  // floodFill(grid[index + 1], x, y, oldColor, newColor);
-  // floodFill(grid[index - 1], x, y, oldColor, newColor);
-
-  /* 
-  // filling the span as right as we can
-  for (let i = index; i < index + gridSize - x; i++) {
-    if (grid[i].style.backgroundColor !== oldColor) break;
-    grid[i].style.backgroundColor = newColor;
-    console.log(grid[index + gridSize * (index - i)]);
-    console.log(grid[i], `div with index ${[i]} has old color`);
-  }
-  // filling the span as left as we can
-  for (let i = index - 1; i >= index - x; i--) {
-    if (grid[i].style.backgroundColor !== oldColor) break;
-    grid[i].style.backgroundColor = newColor;
-    console.log(grid[i], `div with index ${[i]} has old color`);
-    // test for the ends of spans top and bottom
-    // For each new free span, plant a seed
-    // Repeat until there are no more 
-  }
-  */
 }
 
 const generateRandomHex = () =>
   `#${(Math.random() * 0xfffff * 1000000).toString(16).slice(0, 6)}`;
 
-// getting x-y coords for the flood-fill
 function getCoordinates(target) {
-  let gridArr = Array.from(target.parentElement.children);
-  let width = 640;
-  let height = 640;
+  const gridArr = Array.from(target.parentElement.children);
+  const width = 640;
+  const height = 640;
 
   let x =
     gridArr.indexOf(target) %
@@ -227,9 +176,7 @@ populateSquares(sketchGrid, gridSize);
 
 function drawGrid(array, size) {
   for (let i = 0; i < size * size; i++) {
-    array[
-      i
-    ].style.cssText += `border-left: ${borderStyle}; border-top: ${borderStyle}`;
+    array[i].style.cssText += `border-left: ${borderStyle}; border-top: ${borderStyle}`;
   }
   for (let i = 0; i < size * size; i += size) {
     array[i + size - 1].style.cssText += `border-right: ${borderStyle}`;
@@ -280,8 +227,8 @@ function clearGrid() {
 clearGridBtn.addEventListener("click", clearGrid);
 
 function generateMatrix(array, size) {
-  let colsArr = [];
-  let rowsArr = [];
+  const colsArr = [];
+  const rowsArr = [];
 
   for (let i = 0; i < array.length; i += size) {
     let arr = [];
