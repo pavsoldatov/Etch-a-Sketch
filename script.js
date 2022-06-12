@@ -88,7 +88,9 @@ function paint(e) {
   if (currentMode === "singleColor") {
     e.target.style.backgroundColor = `${colorInput.value}`;
   } else if (currentMode === "randomColor") {
-    e.target.style.backgroundColor = `${generateRandomHex()}`;
+    const random = `${generateRandomHex()}`
+    e.target.style.backgroundColor = random;
+    colorInput.setAttribute("value", random);
   } else if (currentMode === "eraser") {
     if (e.target.style.backgroundColor === "#fff") return;
     e.target.style.backgroundColor = "#fff";
