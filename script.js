@@ -87,14 +87,17 @@ function paint(e) {
 
   if (currentMode === "singleColor") {
     e.target.style.backgroundColor = `${colorInput.value}`;
-  } else if (currentMode === "randomColor") {
-    const random = `${generateRandomHex()}`
+  } 
+    else if (currentMode === "randomColor") {
+    const random = generateRandomHex();
     e.target.style.backgroundColor = random;
     colorInput.setAttribute("value", random);
-  } else if (currentMode === "eraser") {
+  } 
+    else if (currentMode === "eraser") {
     if (e.target.style.backgroundColor === "#fff") return;
     e.target.style.backgroundColor = "#fff";
-  } else if (currentMode === "colorFill") {
+  } 
+    else if (currentMode === "colorFill") {
     const { rowsArr, colsArr } = matrix2D;
     const { x, y } = getCoordinates(e.target);
     const oldColor = e.target.style.backgroundColor;
@@ -135,7 +138,7 @@ function floodFill(rows, cols, x, y, oldColor, newColor) {
 
   while (queue.length > 0) {
     const { coordsX, coordsY } = queue.shift();
-    const possibleNeighbors = findNeighbors(rows,cols,coordsX,coordsY,oldColor,newColor);
+    const possibleNeighbors = findNeighbors(rows, cols, coordsX, coordsY, oldColor, newColor);
 
     for (const possibleNeighbor of possibleNeighbors) {
       queue.push(possibleNeighbor);
@@ -178,7 +181,9 @@ populateSquares(sketchGrid, gridSize);
 
 function drawGrid(array, size) {
   for (let i = 0; i < size * size; i++) {
-    array[i].style.cssText += `border-left: ${borderStyle}; border-top: ${borderStyle}`;
+    array[
+      i
+    ].style.cssText += `border-left: ${borderStyle}; border-top: ${borderStyle}`;
   }
   for (let i = 0; i < size * size; i += size) {
     array[i + size - 1].style.cssText += `border-right: ${borderStyle}`;
