@@ -4,6 +4,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Roboto", "Courier New", Courier, monospace;
 }
 
 .container {
@@ -32,6 +33,15 @@
   grid-template-rows: repeat(4, 1fr);
 }
 
+@media (min-width: 1180px) {
+  .container {
+    gap: 12rem;
+  }
+  .sketch-grid {
+    min-width: 512px;
+    min-height: 512px;
+  }
+}
 .settings__toggle-grid-button,
 .settings__clear-grid-button,
 .settings__random-mode-button,
@@ -191,4 +201,23 @@ input[type="range"]::-moz-range-thumb {
   border: 1px solid #000000;
   border-radius: 20px;
   cursor: ew-resize;
+}
+
+.footer {
+  margin-top: 14px;
+  display: flex;
+  justify-content: center;
+  padding: 16px 0;
+  background-color: #1f2937;
+}
+
+.footer a {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  font-weight: 300;
+  font-size: 14px;
+  outline: none;
+  text-decoration: none;
+  color: #e5e7eb;
 }
