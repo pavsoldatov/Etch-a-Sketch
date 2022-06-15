@@ -7,9 +7,15 @@
   font-family: "Roboto", "Courier New", Courier, monospace;
 }
 
-.container {
-  min-height: 100vh;
+body {
   display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  display: flex;
+  flex: 1;
   margin: 0 auto;
   align-items: center;
   gap: 10rem;
@@ -31,9 +37,10 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(4, 1fr);
+  margin: 12px 0;
 }
 
-@media (min-width: 1180px) {
+@media (max-width: 1423px) {
   .container {
     gap: 12rem;
   }
@@ -204,7 +211,6 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .footer {
-  margin-top: 14px;
   display: flex;
   justify-content: center;
   padding: 16px 0;
