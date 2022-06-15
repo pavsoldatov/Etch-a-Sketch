@@ -49,6 +49,7 @@ body {
     min-height: 512px;
   }
 }
+
 .settings__toggle-grid-button,
 .settings__clear-grid-button,
 .settings__random-mode-button,
@@ -66,6 +67,18 @@ body {
   text-align: center;
   transition: background-color 150ms ease-in-out;
 }
+
+@media (max-width: 1423px) {
+  .settings__toggle-grid-button,
+  .settings__clear-grid-button,
+  .settings__random-mode-button,
+  .settings__eraser-button,
+  .settings__color-fill-button {
+    height: 2.25rem;
+    width: 7.75rem;
+  }
+}
+
 .settings__clear-grid-button,
 .settings__random-mode-button,
 .settings__eraser-button,
