@@ -18,7 +18,7 @@ body {
   flex: 1;
   margin: 0 auto;
   align-items: center;
-  gap: 10rem;
+  gap: 8.5rem;
   width: min(95%, 70rem);
 }
 
