@@ -16,3 +16,5 @@ Desktop only.
 2. Gained some basic idea of how certain data structures (stack, queue) can be managed in JS (FIFO - `queue.push()`/`queue.shift()` and LIFO - `stack.push()`/`stack.pop()`) to avoid stack overflow when implementing algos such as floodfill.
 3. Improved understanding of nested loops and how to traverse 2D arrays.
 4. Got some more experience with the BEM naming convention.
+
+P.S. Huge thanks to authors of https://www.algorithm-archive.org/contents/flood_fill/flood_fill.html
