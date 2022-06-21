@@ -92,6 +92,7 @@ function paint(e) {
     const random = generateRandomHex();
     e.target.style.backgroundColor = random;
     colorInput.setAttribute("value", random);
+    colorInput.value = random;
   } 
     else if (currentMode === "eraser") {
     if (e.target.style.backgroundColor === "#fff") return;
