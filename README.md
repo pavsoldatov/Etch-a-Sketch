@@ -2,7 +2,7 @@
 A browser version of something between a sketchpad and an Etch-A-Sketch.
 Desktop only.
 
-![pica_preview](https://user-images.githubusercontent.com/80415302/218203574-2fda3bfe-671f-48b7-9766-c59e1cc95d74.jpg)
+![pica_preview](https://user-images.githubusercontent.com/80415302/218204330-e029ebdd-efcc-4f0f-857a-73c6d502dfcb.jpg)
 
 ## What I learned:
 
